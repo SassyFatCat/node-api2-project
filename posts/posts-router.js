@@ -1,6 +1,5 @@
 const express = require('express');
 const Posts = require('../data/db.js');
-const { findCommentById, findPostComments } = require('../data/db.js');
 const router = express.Router();
 
 // POST
@@ -45,7 +44,7 @@ Posts.findById(id)
 
 router.get('/:id/comments', (req, res) => {
 const {id} = req.params;
-findPostComments(id)
+Posts.findPostComments(id)
     .then(result => result[0] ? res.status(200).json({ data: result }) : res.status(404).json({ message: "The post with the specified ID does not exist." }))
     .catch(err => res.status(500).json({ error: "The comments information could not be retrieved." }))
 })
